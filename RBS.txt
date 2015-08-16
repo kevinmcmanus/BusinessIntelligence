@@ -1,0 +1,36 @@
+Teleflex Global Information Technology
+  International IT
+  Global IT and Infrastructure
+    IT Operations
+    North American Service Support
+      Service and Support, US
+      Service and Support, MS
+      Service Desk
+    EMEA Service Support
+      Service and Support, EMEA 1
+      Service and Support EMEA 2
+      Service and Support, IM International
+      Service and Support, APAC
+    End Point Delivery
+    Infrastructure Delivery
+      Security, Server & Communications
+      Network & Storage Infrastructure
+  Global ERP Solutions
+    Global ERP Services, APAC
+    Global ERP Services, EMEA
+    Global ERP Services, NA
+      Business Solutions I
+      Business Solutions, Finance
+      Business Solutions II
+      Business Solutions PLM/QM
+    Finance
+    Global ERP Services, BI
+    Global ERP Technical Services
+      Application Architecture
+      Security
+      Business Solutions & Project Management
+      Application Development and Integration
+  Global IT Services
+    EPMO
+    IT Quality
+    Global ERP Services-OCM

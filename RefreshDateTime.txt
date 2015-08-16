@@ -1,0 +1,15 @@
+let
+    Source = List.DateTimes,
+    #"Invoked FunctionSource" = Source(DateTime.FixedLocalNow(), 1, #duration(0, 0, 0, 1)),
+    #"Table from List" = Table.FromList(#"Invoked FunctionSource", Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Rename Column to LastRefreshDate" = Table.RenameColumns(#"Table from List",{{"Column1", "LastRefreshDate"}}),
+    #"Changed Type" = Table.TransformColumnTypes(#"Rename Column to LastRefreshDate",{{"LastRefreshDate", type datetime}})
+in
+    #"Changed Type"
+	
+
+//Measure definition:
+Last Refresh DateTime := MAX([LastRefreshDate])
+
+//worksheet function to get the Last Refresh DateTime	
+=CUBEVALUE("ThisWorkbookDataModel", CUBEMEMBER("ThisWorkbookDataModel","[Measures].[Last Refresh DateTime]"))

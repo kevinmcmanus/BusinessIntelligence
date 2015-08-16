@@ -1,0 +1,43 @@
+
+	
+//Resources	
+let
+    Source = Excel.CurrentWorkbook(){[Name="ODataSource"]}[Content],
+    ODataSource = Source{0}[Column1],
+    Resources = OData.Feed(ODataSource){[Name="Resources"]}[Data]
+in
+    Resources
+
+//ResourceTimephasedDataSet
+let
+    Source = Excel.CurrentWorkbook(){[Name="ODataSource"]}[Content],
+    ODataSource = Source{0}[Column1],
+    ResourceTimephasedDataSet = OData.Feed(ODataSource){[Name="ResourceTimephasedDataSet"]}[Data]
+in
+    ResourceTimephasedDataSet
+
+//Assignments	
+let
+    Source = Excel.CurrentWorkbook(){[Name="ODataSource"]}[Content],
+    ODataSource = Source{0}[Column1],
+    Assignments = OData.Feed(ODataSource){[Name="Assignments"]}[Data]
+in
+    Assignments
+	
+//AssignmentTimephasedDataSet
+let
+    Source = Excel.CurrentWorkbook(){[Name="ODataSource"]}[Content],
+    ODataSource = Source{0}[Column1],
+    AssignmentTimephasedDataSet = OData.Feed(ODataSource){[Name="AssignmentTimephasedDataSet"]}[Data]
+in
+    AssignmentTimephasedDataSet
+	
+
+//Projects	
+let
+
+    Source = Excel.CurrentWorkbook(){[Name="ODataSource"]}[Content],
+    ODataSource = Source{0}[Column1],
+    Projects = OData.Feed(ODataSource){[Name="Projects"]}[Data]
+in
+    Projects

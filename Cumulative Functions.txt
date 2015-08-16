@@ -1,0 +1,57 @@
+IF (
+    MIN ( TimeInfo[DayValue] )
+        <= 
+            MAX ( Projects[ProjectStatusDate] ),
+          
+    CALCULATE (
+        SUM ( TaskTimephasedDataSet[TaskActualWork] ),
+        FILTER (
+            ALL ( TimeInfo[DayValue] ),
+            TimeInfo[DayValue] <= MAX ( TimeInfo[DayValue] )
+        )
+    )
+)
+
+CumulativeWork :=
+IF (
+    MIN ( TimeInfo[DayValue] )
+        <= CALCULATE (
+            MAX ( TaskTimephasedDataSet[TimeByDay] ),
+            ALL ( Projects[ProjectName] )
+        ),
+    CALCULATE (
+        SUM ( TaskTimephasedDataSet[TaskWork] ),
+        FILTER (
+            ALL ( TimeInfo[DayValue] ),
+            TimeInfo[DayValue] <= MAX ( TimeInfo[DayValue] )
+        )
+    )
+
+)
+
+CumulativeWork :=
+IF (
+    MIN ( TimeInfo[DayValue] )
+        <= MAX ( TaskTimephasedDataSet[TimeByDay] ),            
+    CALCULATE (
+        SUM ( TaskTimephasedDataSet[TaskWork] ),
+        FILTER (
+            ALL ( TimeInfo[DayValue] ),
+            TimeInfo[DayValue] <= MAX ( TimeInfo[DayValue] )
+        )
+    )
+
+)
+BaselineCumulativeWork :=
+IF (
+    MIN ( TimeInfo[DayValue] )
+        <= MAX ( TaskBaselineTimephasedDataSet[TimeByDay] ),
+
+    CALCULATE (
+        SUM ( TaskBaselineTimephasedDataSet[TaskBaselineWork] ),
+        FILTER (
+            ALL ( TimeInfo[DayValue] ),
+            TimeInfo[DayValue] <= MAX ( TimeInfo[DayValue] )
+        )
+    )
+)

@@ -1,0 +1,31 @@
+let
+    Source = List.Dates,
+    CalendarStartDate = DateTime.Date(Date.StartOfMonth(Date.AddMonths(DateTime.FixedLocalNow(), -6))),  // Set the start date of the calendar, set for beginning of the month six months ago
+    CalendarEndDate = DateTime.Date(Date.EndOfMonth(Date.AddMonths(DateTime.FixedLocalNow(), 5))),   // Set the end data of the calendar. set for the end of the month six months in the future
+    #"Invoked FunctionSource" = Source(CalendarStartDate, Duration.Days(CalendarEndDate - CalendarStartDate) + 1, #duration(1, 0, 0, 0)),
+    #"Table from List" = Table.FromList(#"Invoked FunctionSource", Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+    #"Rename Column to Date" = Table.RenameColumns(#"Table from List",{{"Column1", "Date"}}),
+    #"Changed Type to Date" = Table.TransformColumnTypes(#"Rename Column to Date",{{"Date", type date}}),
+    #"Added Year Column" = Table.AddColumn(#"Changed Type to Date", "Year", each Date.Year([Date])),
+    #"Added Month Number Column" = Table.AddColumn(#"Added Year Column", "Month Number", each Date.Month([Date])),
+    #"Added Day of Month Column" = Table.AddColumn(#"Added Month Number Column", "Day of Month", each Date.Day([Date])),
+    #"Added Day of Year Column" = Table.AddColumn(#"Added Day of Month Column", "Day of Year", each Date.DayOfYear([Date])),
+    #"Added Short Year Column" = Table.AddColumn(#"Added Day of Year Column", "Short Year", each Number.FromText(Text.End(Number.ToText([Year]),2))),
+    #"Added Week of Month Column" = Table.AddColumn(#"Added Short Year Column", "Week of Month", each Date.WeekOfMonth([Date])),
+    #"Added Week of Year Colum" = Table.AddColumn(#"Added Week of Month Column", "Week of Year", each Date.WeekOfYear([Date])),
+    #"Added Quarter of Year Column" = Table.AddColumn(#"Added Week of Year Colum", "Quarter of Year", each Date.QuarterOfYear([Date])),
+    #"Added YearMonth Integer Column" = Table.AddColumn(#"Added Quarter of Year Column", "YearMonth Integer", each Number.FromText(Text.Combine( {Number.ToText([Year]),  Number.ToText([Month Number],"00")} ))),
+    #"Added YearQuarter Integer Column" = Table.AddColumn(#"Added YearMonth Integer Column", "YearQuarter Integer", each Number.FromText(Text.Combine( {Number.ToText([Year]),  Number.ToText([Quarter of Year])} ))),
+    #"Added Month Name Column" = Table.AddColumn(#"Added YearQuarter Integer Column", "Month Name", each Date.ToText([Date],"MMM")),
+    #"Added Month Name Long Column" = Table.AddColumn(#"Added Month Name Column", "Month Name Long", each Date.ToText([Date],"MMMM")),
+    #"Added Day Name Column" = Table.AddColumn(#"Added Month Name Long Column", "Day Name", each Date.ToText([Date],"ddd")),
+    #"Added Day Name Long Column" = Table.AddColumn(#"Added Day Name Column", "Day Name Long", each Date.ToText([Date],"dddd")),
+    #"Added Month In Calendar Column" = Table.AddColumn(#"Added Day Name Long Column", "Month In Calendar", each Text.Combine( { [Month Name],  " ",   Number.ToText([Year]) })),
+    #"Added Quarter In Calendar Column" = Table.AddColumn(#"Added Month In Calendar Column", "Quarter in Calendar", each Text.Combine( { "Q", Number.ToText([Quarter of Year]), " ", Number.ToText([Year]) } )),
+    #"Added Date As Text Column" = Table.AddColumn(#"Added Quarter In Calendar Column", "Date As Text", each Date.ToText([Date],"MM/dd/yy")),
+    #"Added MonthYear Column" = Table.AddColumn(#"Added Date As Text Column", "MonthYear", each Date.ToText([Date],"MMM-yyyy")),
+    #"Added Week Ending Column" = Table.AddColumn(#"Added MonthYear Column","Week Ending", each Date.EndOfWeek([Date])),
+    #"Added Week Starting Column" = Table.AddColumn(#"Added Week Ending Column", "Week Starting", each Date.StartOfWeek([Date])),
+    #"Changed Column Types" = Table.TransformColumnTypes(#"Added Week Starting Column",{{"Year", Int64.Type}, {"Month Number", Int64.Type}, {"Day of Month", Int64.Type}, {"Day of Year", Int64.Type}, {"Short Year", Int64.Type}, {"Week of Month", Int64.Type}, {"Week of Year", Int64.Type}, {"Quarter of Year", Int64.Type}, {"YearMonth Integer", Int64.Type}, {"YearQuarter Integer", Int64.Type}, {"Month Name", type text}, {"Month Name Long", type text}, {"Day Name", type text}, {"Day Name Long", type text}, {"Month In Calendar", type text}, {"Quarter in Calendar", type text}, {"Date As Text", type text}, {"MonthYear", type date}, {"Week Ending", type date}, {"Week Starting", type date}})
+in
+    #"Changed Column Types"

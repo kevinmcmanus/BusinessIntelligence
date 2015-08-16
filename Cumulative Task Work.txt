@@ -1,0 +1,13 @@
+=IF (
+    MIN ( DateInfo[Date] )
+        <= MAX ( TaskTimephasedDataSet[TimeByDay] ),
+
+    CALCULATE (
+        SUM ( TaskTimephasedDataSet[TaskWork] ),
+		Tasks[TaskIsProjectSummary] = TRUE,
+        FILTER (
+            ALL ( DateInfo[Date] ),
+            DateInfo[Date] <= MAX ( DateInfo[Date] )
+        )
+    ), 23/0
+)

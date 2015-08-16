@@ -1,0 +1,9 @@
+	
+//creates a table with serial records	
+let
+	Source = List.Numbers,
+	#"Invoked FunctionSource" = Source(1,730), //730 reporting periods should be sufficient
+	#"Table from List" = Table.FromList(#"Invoked FunctionSource", Splitter.SplitByNothing(), null, null, ExtraValues.Error),
+	#"Rename Column to SerialNum" = Table.RenameColumns(#"Table from List", {{"Column1","SerialNum"}})
+in
+	#"Rename Column to SerialNum"

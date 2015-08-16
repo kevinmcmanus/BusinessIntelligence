@@ -1,0 +1,58 @@
+
+Sub VisitTasks()
+Dim T As Task
+Dim A As Assignment
+Dim field As Long
+Dim sd As Date
+Dim str As String
+Dim efin As Variant
+Dim tname As String
+Dim rname As String
+Dim afin As Variant
+
+
+
+If ActiveProject.StatusDate = "NA" Then
+    MsgBox "No Status Date set", vbCritical
+    Exit Sub
+    End If
+    
+sd = ActiveProject.StatusDate
+if MsgBox("Status Date: " & Format(sd, "mm/dd/yy hh:mm:ss"), vbOKCancel) =vbCancel then
+	Exit Sub
+	end if
+	
+For Each T In ActiveProject.Tasks
+    For Each A In T.Assignments
+        'to facilitate debugging:
+        tname = T.Name
+        rname = A.ResourceName
+        efin = A.EstFin
+        afin = A.ActualFinish
+    
+        'skip completed assignments
+        If A.ActualFinish <> "NA" Then
+            GoTo Skippit
+            End If
+        'skip assignments without EstFin's
+        If A.EstFin = "NA" Then
+            GoTo Skippit
+            End If
+			
+        'stuff the time portion of the date with 5:00 PM, since timesheet interface doesn't do it
+		efin = datevalue(format(A.EstFin,"mm/dd/yy"))+ timevalue( "17:00:00")
+		
+        'if the estimated finish date is earlier than
+		'the status date, mark the assignment as complete as of the estimated finish
+		'set the assignment finish date to the estimated finish date
+        If efin <= sd Then
+           A.RemainingWork = 0
+           A.ActualFinish = efin
+        Else  
+            A.Finish = efin
+        End If
+        
+Skippit:         Next A
+    Next T
+
+End Sub

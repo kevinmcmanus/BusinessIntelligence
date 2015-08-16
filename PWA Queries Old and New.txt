@@ -1,0 +1,82 @@
+Old Projects
+let
+    Source = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmProject_UserView = Source{[Schema="dbo",Item="MSP_EpmProject_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmProject_UserView,{"ProjectUID", "ProjectName", "ProjectAuthorName", "ProjectStartDate", "ProjectFinishDate", "ProjectStatusDate", "ProjectManagerName", "ProjectType", "ProjectWork", "ProjectActualWork", "ProjectDuration", "ProjectActualDuration", "ProjectActualStartDate", "ProjectActualFinishDate", "ProjectPercentCompleted", "ProjectPercentWorkCompleted", "ProjectRemainingWork", "ProjectRemainingDuration", "ProjectBaseline0Cost", "ProjectBaseline0Work", "ProjectBaseline0StartDate", "ProjectBaseline0FinishDate", "ProjectBaseline0Duration"})
+in
+    #"Removed Other Columns"
+
+
+Old Assignments By Day
+let
+    Source = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmAssignmentByDay_UserView = Source{[Schema="dbo",Item="MSP_EpmAssignmentByDay_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmAssignmentByDay_UserView,{"AssignmentUID", "TimeByDay", "ProjectUID", "TaskUID", "AssignmentCost", "AssignmentWork", "AssignmentActualWork", "AssignmentBaseline0Work"})
+in
+    #"Removed Other Columns"
+	
+Old Assignments
+let
+    Source = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmAssignment_UserView = Source{[Schema="dbo",Item="MSP_EpmAssignment_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmAssignment_UserView,{"ProjectUID", "ResourceUID", "AssignmentUID", "AssignmentCost", "AssignmentWork", "AssignmentPercentWorkCompleted", "AssignmentStartDate", "AssignmentFinishDate", "AssignmentActualStartDate", "AssignmentActualFinishDate", "AssignmentRemainingCost", "AssignmentRemainingWork"})
+in
+    #"Removed Other Columns"
+
+Old Resources By Day
+let
+    Source = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmResourceByDay_UserView = Source{[Schema="dbo",Item="MSP_EpmResourceByDay_UserView"]}[Data]
+in
+    dbo_MSP_EpmResourceByDay_UserView
+
+Old Resources
+let
+    Source = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmResource_UserView = Source{[Schema="dbo",Item="MSP_EpmResource_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmResource_UserView,{"ResourceStatusUID", "ResourceType", "ResourceUID", "ResourceName", "ResourceStandardRate", "ResourceEmailAddress", "ResourceInitials", "ResourceGroup", "ResourceMaxUnits", "ResourceTimesheetManagerUID", "ResourceEarliestAvailableFrom", "ResourceLatestAvailableTo", "ResourceNTAccount"})
+in
+    #"Removed Other Columns"
+
+
+//New stuff	
+New Projects
+let
+    Source = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmProject_UserView = Source{[Schema="dbo",Item="MSP_EpmProject_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmProject_UserView,{"ProjectUID", "ProjectName", "ProjectAuthorName", "ProjectStartDate", "ProjectFinishDate", "ProjectStatusDate", "ProjectManagerName", "ProjectType", "ProjectWork", "ProjectActualWork", "ProjectDuration", "ProjectActualDuration", "ProjectActualStartDate", "ProjectActualFinishDate", "ProjectPercentCompleted", "ProjectPercentWorkCompleted", "ProjectRemainingWork", "ProjectRemainingDuration", "ProjectBaseline0Cost", "ProjectBaseline0Work", "ProjectBaseline0StartDate", "ProjectBaseline0FinishDate", "ProjectBaseline0Duration"})
+in
+    #"Removed Other Columns"
+
+
+New Assignments By Day
+let
+    Source = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmAssignmentByDay_UserView = Source{[Schema="dbo",Item="MSP_EpmAssignmentByDay_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmAssignmentByDay_UserView,{"AssignmentUID", "TimeByDay", "ProjectUID", "TaskUID", "AssignmentCost", "AssignmentWork", "AssignmentActualWork", "AssignmentBaseline0Work"})
+in
+    #"Removed Other Columns"
+	
+New Assignments
+let
+    Source = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmAssignment_UserView = Source{[Schema="dbo",Item="MSP_EpmAssignment_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmAssignment_UserView,{"ProjectUID", "ResourceUID", "AssignmentUID", "AssignmentCost", "AssignmentWork", "AssignmentPercentWorkCompleted", "AssignmentStartDate", "AssignmentFinishDate", "AssignmentActualStartDate", "AssignmentActualFinishDate", "AssignmentRemainingCost", "AssignmentRemainingWork"})
+in
+    #"Removed Other Columns"
+	
+
+New Resources By Day
+let
+    Source = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmResourceByDay_UserView = Source{[Schema="dbo",Item="MSP_EpmResourceByDay_UserView"]}[Data]
+in
+    dbo_MSP_EpmResourceByDay_UserView
+
+New Resources
+let
+    Source = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmResource_UserView = Source{[Schema="dbo",Item="MSP_EpmResource_UserView"]}[Data],
+    #"Removed Other Columns" = Table.SelectColumns(dbo_MSP_EpmResource_UserView,{"ResourceStatusUID", "ResourceType", "ResourceUID", "ResourceName", "ResourceStandardRate", "ResourceEmailAddress", "ResourceInitials", "ResourceGroup", "ResourceMaxUnits", "ResourceTimesheetManagerUID", "ResourceEarliestAvailableFrom", "ResourceLatestAvailableTo", "ResourceNTAccount"})
+in
+    #"Removed Other Columns"

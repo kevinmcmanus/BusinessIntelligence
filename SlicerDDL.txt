@@ -1,0 +1,36 @@
+CREATE GLOBAL CUBE [Comp Sales Cube] STORAGE 'C:\Users\Kevin\Documents\Consulting\Blue Margin\Comp Sales Cube.cub' FROM [Comp Sales Cube]
+(
+	MEASURE [Comp Sales Cube].[Sales Units],
+
+	DIMENSION [Comp Sales Cube].[Geography Dimension].[Hierarchy]
+	(
+		LEVEL [(All)],
+		LEVEL [All Geo],
+		LEVEL [Maj Geo],
+		LEVEL [Country],
+		LEVEL [Channel],
+		LEVEL [Customer],
+		MEMBER [Geography Dimension].[Hierarchy].[All Geo].&[1]
+	),
+	DIMENSION [Comp Sales Cube].[Product Dimension].[Hierarchy]
+	(
+		LEVEL [(All)],
+		LEVEL [All Products],
+		LEVEL [Product Type],
+		LEVEL [Product Line],
+		LEVEL [Product Family],
+		LEVEL [SKU],
+		MEMBER [Product Dimension].[Hierarchy].[All Products].&[1]
+	),
+	DIMENSION [Comp Sales Cube].[Time Dimension].[Hierarchy]
+	(
+		LEVEL [(All)],
+		LEVEL [All Time],
+		LEVEL [Year Time],
+		LEVEL [Quarter Time],
+		LEVEL [Month Time],
+		MEMBER [Time Dimension].[Hierarchy].[All Time].&[1]
+	)
+
+)
+

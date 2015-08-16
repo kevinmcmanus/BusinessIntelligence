@@ -1,0 +1,3 @@
+The formula:  =(INT((K18+6)/7)*7)-6 will return the date of the Sunday that contains the date in K18, i.e. the week starting date
+
+The formula:  =INT((K18+6)/7)*7 will return the date of the Saturday that contains the date in K18, i.e. the week ending date

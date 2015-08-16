@@ -1,0 +1,97 @@
+	
+//combined Projects
+let
+	//old projects
+    SourceOld = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmProject_UserViewOld = SourceOld{[Schema="dbo",Item="MSP_EpmProject_UserView"]}[Data],
+    #"Removed Other ColumnsOld" = Table.SelectColumns(dbo_MSP_EpmProject_UserViewOld,{"ProjectUID", "ProjectName", "ProjectAuthorName", "ProjectStartDate", "ProjectFinishDate", "ProjectStatusDate", "ProjectManagerName", "ProjectType", "ProjectWork", "ProjectActualWork", "ProjectDuration", "ProjectActualDuration", "ProjectActualStartDate", "ProjectActualFinishDate", "ProjectPercentCompleted", "ProjectPercentWorkCompleted", "ProjectRemainingWork", "ProjectRemainingDuration", "ProjectBaseline0Cost", "ProjectBaseline0Work", "ProjectBaseline0StartDate", "ProjectBaseline0FinishDate", "ProjectBaseline0Duration"}),
+    #"Added CustomOld" = Table.AddColumn(#"Removed Other ColumnsOld", "PWAInstance", each "Legacy PWA"),
+    
+	//new projects
+	SourceNew = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmProject_UserViewNew = SourceNew{[Schema="dbo",Item="MSP_EpmProject_UserView"]}[Data],
+    #"Removed Other ColumnsNew" = Table.SelectColumns(dbo_MSP_EpmProject_UserViewNew,{"ProjectUID", "ProjectName", "ProjectAuthorName", "ProjectStartDate", "ProjectFinishDate", "ProjectStatusDate", "ProjectManagerName", "ProjectType", "ProjectWork", "ProjectActualWork", "ProjectDuration", "ProjectActualDuration", "ProjectActualStartDate", "ProjectActualFinishDate", "ProjectPercentCompleted", "ProjectPercentWorkCompleted", "ProjectRemainingWork", "ProjectRemainingDuration", "ProjectBaseline0Cost", "ProjectBaseline0Work", "ProjectBaseline0StartDate", "ProjectBaseline0FinishDate", "ProjectBaseline0Duration"}),
+	#"Added CustomNew" = Table.AddColumn(#"Removed Other ColumnsNew", "PWAInstance", each "New PWA"),
+    
+	//put 'em together
+	#"Appended Query" = Table.Combine({#"Added CustomOld",#"Added CustomNew"})	
+in
+    #"Appended Query"
+	
+
+//combined Resources
+
+let
+    //Old Resources
+	SourceOld = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmResource_UserViewOld = SourceOld{[Schema="dbo",Item="MSP_EpmResource_UserView"]}[Data],
+    #"Removed Other ColumnsOld" = Table.SelectColumns(dbo_MSP_EpmResource_UserViewOld,{"ResourceStatusUID", "ResourceType", "ResourceUID", "ResourceName", "ResourceStandardRate", "ResourceEmailAddress", "ResourceInitials", "ResourceGroup", "ResourceMaxUnits", "ResourceTimesheetManagerUID", "ResourceEarliestAvailableFrom", "ResourceLatestAvailableTo", "ResourceNTAccount"}),
+    #"Added CustomOld" = Table.AddColumn(#"Removed Other ColumnsOld", "PWAInstance", each "Legacy PWA"),
+
+	//New Resource
+	SourceNew = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmResource_UserViewNew = SourceNew{[Schema="dbo",Item="MSP_EpmResource_UserView"]}[Data],
+    #"Removed Other ColumnsNew" = Table.SelectColumns(dbo_MSP_EpmResource_UserViewNew,{"ResourceStatusUID", "ResourceType", "ResourceUID", "ResourceName", "ResourceStandardRate", "ResourceEmailAddress", "ResourceInitials", "ResourceGroup", "ResourceMaxUnits", "ResourceTimesheetManagerUID", "ResourceEarliestAvailableFrom", "ResourceLatestAvailableTo", "ResourceNTAccount"}),
+    #"Added CustomNew" = Table.AddColumn(#"Removed Other ColumnsNew", "PWAInstance", each "New PWA"),
+	
+	//put 'em together
+	#"Appended Query" = Table.Combine({#"Added CustomOld",#"Added CustomNew"})	
+in
+    #"Appended Query"	
+	
+//combined resources by day
+let
+    //old resources by day
+	SourceOld = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmResourceByDay_UserViewOld = SourceOld{[Schema="dbo",Item="MSP_EpmResourceByDay_UserView"]}[Data],
+	#"Added CustomOld" = Table.AddColumn(dbo_MSP_EpmResourceByDay_UserViewOld, "PWAInstance", each "Legacy PWA"),
+	
+	//new resources by day
+	SourceNew = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmResourceByDay_UserViewNew = Source{[Schema="dbo",Item="MSP_EpmResourceByDay_UserView"]}[Data],
+	#"Added CustomNew" = Table.AddColumn(dbo_MSP_EpmResourceByDay_UserViewNew, "PWAInstance", each "New PWA"),
+	
+	//put 'em together
+	#"Appended Query" = Table.Combine({#"Added CustomOld",#"Added CustomNew"})	
+in
+    #"Appended Query"
+	
+//Combined Assignments
+let
+    //old Assignments
+	SourceOld = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmAssignment_UserViewOld = Source{[Schema="dbo",Item="MSP_EpmAssignment_UserView"]}[Data],
+    #"Removed Other ColumnsOld" = Table.SelectColumns(dbo_MSP_EpmAssignment_UserViewOld,{"ProjectUID", "ResourceUID", "AssignmentUID", "AssignmentCost", "AssignmentWork", "AssignmentPercentWorkCompleted", "AssignmentStartDate", "AssignmentFinishDate", "AssignmentActualStartDate", "AssignmentActualFinishDate", "AssignmentRemainingCost", "AssignmentRemainingWork"})
+    #"Added CustomOld" = Table.AddColumn(#"Removed Other ColumnsOld", "PWAInstance", each "Legacy PWA"),
+
+	//new assignments
+	SourceNew = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+    dbo_MSP_EpmAssignment_UserViewNew = Source{[Schema="dbo",Item="MSP_EpmAssignment_UserView"]}[Data],
+    #"Removed Other ColumnsNew" = Table.SelectColumns(dbo_MSP_EpmAssignment_UserViewNew,{"ProjectUID", "ResourceUID", "AssignmentUID", "AssignmentCost", "AssignmentWork", "AssignmentPercentWorkCompleted", "AssignmentStartDate", "AssignmentFinishDate", "AssignmentActualStartDate", "AssignmentActualFinishDate", "AssignmentRemainingCost", "AssignmentRemainingWork"})
+	#"Added CustomNew" = Table.AddColumn(dbo_MSP_EpmResourceByDay_UserViewNew, "PWAInstance", each "New PWA"),
+	
+	//put 'em together
+	#"Appended Query" = Table.Combine({#"Added CustomOld",#"Added CustomNew"})	
+in
+    #"Appended Query"
+
+	
+//Combined Assignments by day
+let
+    //Old Assignments by Day
+	SourceOld = Sql.Database("boa-taxi", "ProjectWebApp"),
+    dbo_MSP_EpmAssignmentByDay_UserViewOld = Source{[Schema="dbo",Item="MSP_EpmAssignmentByDay_UserView"]}[Data],
+    #"Removed Other ColumnsOld" = Table.SelectColumns(dbo_MSP_EpmAssignmentByDay_UserViewOld,{"AssignmentUID", "TimeByDay", "ProjectUID", "TaskUID", "AssignmentCost", "AssignmentWork", "AssignmentActualWork", "AssignmentBaseline0Work"}),
+    #"Added CustomOld" = Table.AddColumn(#"Removed Other ColumnsOld", "PWAInstance", each "Legacy PWA"),
+
+	//New Assignments by Day
+	SourceNew = Sql.Database("boa-taxi\powerpivot", "ProjectWebApp_PWA"),
+	dbo_MSP_EpmAssignmentByDay_UserViewNew = Source{[Schema="dbo",Item="MSP_EpmAssignmentByDay_UserView"]}[Data],
+    #"Removed Other ColumnsNew" = Table.SelectColumns(dbo_MSP_EpmAssignmentByDay_UserViewNew,{"AssignmentUID", "TimeByDay", "ProjectUID", "TaskUID", "AssignmentCost", "AssignmentWork", "AssignmentActualWork", "AssignmentBaseline0Work"}),
+	#"Added CustomNew" = Table.AddColumn(dbo_MSP_EpmResourceByDay_UserViewNew, "PWAInstance", each "New PWA"),
+	
+	//put 'em together
+	#"Appended Query" = Table.Combine({#"Added CustomOld",#"Added CustomNew"})	
+in
+    #"Appended Query"
+

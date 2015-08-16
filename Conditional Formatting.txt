@@ -1,0 +1,32 @@
+Bad:
+Font = RGB (156, 0, 6)
+fill = shaded (255, 199, 206)
+=ABS(K18-UtilizationTarget) > UtilizationYellowLimit
+
+Neutral:
+Font = RBG(156,101,0)
+fill = shaded (255, 235, 156)
+=ABS(K18-UtilizationTarget) <= UtilizationYellowLimit
+
+Good:
+Font = RBG(0,97,0)
+fill = shaded(198, 239, 206)
+=ABS(K18-UtilizationTarget) <= UtilizationGreenLimit
+
+
+=NOT(AND(E17 >= EffCapGreenLow, E17 <= EffCapGreenHigh))
+
+https://tfxinc.sharepoint.com/sites/ITGlobal/default.aspx
+https://tfxinc.sharepoint.com/sites/ITGlobal/ProjectOnlineImplementation/_layouts/15/start.aspx#/
+https://tfxinc.sharepoint.com/sites/ITSandbox/default.aspx
+https://tfxinc.sharepoint.com/sites/ITSandbox/poi/_layouts/15/start.aspx#/default.aspx
+
+
+https://tfxinc.sharepoint.com/sites/ITGlobal/Power Pivot Reports/Resource Summary.xlsx
+https://tfxinc.sharepoint.com/sites/ITGlobal/Power Pivot Reports/TFX Burndown.xlsx
+InFlightProjects
+JustificationsInProgress
+JustificationsComplete
+JustificationStatus
+
+https://tfxinc.sharepoint.com/sites/ITGlobal/_api/ProjectData
